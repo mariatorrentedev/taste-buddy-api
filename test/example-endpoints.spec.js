@@ -2,9 +2,9 @@
 // const knex = require("knex");
 // const supertest = require("supertest");
 // const app = require("../src/app");
-// const { makeArticlesArray, makeMaliciousArticle } = require("./articles.fixtures");
+// const { maketastingsArray, makeMaliciousTasting } = require("./tastings.fixtures");
 
-// describe("Article endpoints", () => {
+// describe("Tasting endpoints", () => {
 //   let db;
 
 //   before("make knex instance", () => {
@@ -15,43 +15,43 @@
 //     app.set("db", db);
 //   });
 
-//   before("clean the table", () => db("blogful_articles").truncate());
+//   before("clean the table", () => db("blogful_tastings").truncate());
 
 //   after("disconnect from db", () => db.destroy());
 
-//   afterEach("cleanup", () => db("blogful_articles").truncate());
+//   afterEach("cleanup", () => db("blogful_tastings").truncate());
 
-//   describe("GET /articles", () => {
-//     context(`Given no articles`, () => {
+//   describe("GET /tastings", () => {
+//     context(`Given no tastings`, () => {
 //       it(`responds with 200 and an empty list`, () => {
-//         return supertest(app).get("/articles").expect(200, []);
+//         return supertest(app).get("/tastings").expect(200, []);
 //       });
 //     });
 
-//     context("Given there are articles in the database", () => {
-//       const testArticles = makeArticlesArray();
+//     context("Given there are tastings in the database", () => {
+//       const testtastings = maketastingsArray();
 
-//       beforeEach("insert articles", () => {
-//         return db.into("blogful_articles").insert(testArticles);
+//       beforeEach("insert tastings", () => {
+//         return db.into("blogful_tastings").insert(testtastings);
 //       });
 
-//       it("GET /articles responds with 200 and all articles", () => {
-//         return supertest(app).get("/articles").expect(200, testArticles);
+//       it("GET /tastings responds with 200 and all tastings", () => {
+//         return supertest(app).get("/tastings").expect(200, testtastings);
 //       });
 //     });
 
-//     context(`Given an XSS attack article`, () => {
-//       const maliciousArticle = makeMaliciousArticle();
-      
-//       beforeEach('insert malicious article', () => {
+//     context(`Given an XSS attack Tasting`, () => {
+//       const maliciousTasting = makeMaliciousTasting();
+
+//       beforeEach('insert malicious Tasting', () => {
 //         return db
-//           .into('blogful_articles')
-//           .insert([ maliciousArticle ]);
+//           .into('blogful_tastings')
+//           .insert([ maliciousTasting ]);
 //       });
-      
+
 //       it('removes XSS attack content', () => {
 //         return supertest(app)
-//           .get(`/articles`)
+//           .get(`/tastings`)
 //           .expect(200)
 //           .expect(res => {
 //             expect(res.body[0].title).to.eql('Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;');
@@ -61,60 +61,60 @@
 //     });
 //   });
 
-//   describe("POST /articles", () => {
-//     it("creates an articles, responds with 201 and the new article", function() {
+//   describe("POST /tastings", () => {
+//     it("creates an tastings, responds with 201 and the new Tasting", function() {
 //       this.retries(3);
-//       const newArticle = {
-//         title: "Test new article",
+//       const newTasting = {
+//         title: "Test new Tasting",
 //         style: "Listicle",
-//         content: "Test new article content..."
+//         content: "Test new Tasting content..."
 //       };
 //       return supertest(app)
-//         .post("/articles")
-//         .send(newArticle)
+//         .post("/tastings")
+//         .send(newTasting)
 //         .expect(201)
 //         .expect((res) => {
-//           expect(res.body.title).to.eql(newArticle.title);
-//           expect(res.body.style).to.eql(newArticle.style);
-//           expect(res.body.content).to.eql(newArticle.content);
+//           expect(res.body.title).to.eql(newTasting.title);
+//           expect(res.body.style).to.eql(newTasting.style);
+//           expect(res.body.content).to.eql(newTasting.content);
 //           expect(res.body).to.have.property("id");
-//           expect(res.headers.location).to.eql(`/articles/${res.body.id}`);
+//           expect(res.headers.location).to.eql(`/tastings/${res.body.id}`);
 //           const expected = new Date().toLocaleDateString();
 //           const actual = new Date(res.body.date_published).toLocaleDateString();
 //           expect(actual).to.eql(expected);
 //         })
 //         .then((postRes) =>
 //           supertest(app)
-//             .get(`/articles/${postRes.body.id}`)
+//             .get(`/tastings/${postRes.body.id}`)
 //             .expect(postRes.body)
 //         );
 //     });
 
 //     const fields = ['title', 'style', 'content'];
 //     fields.forEach(field => {
-//       const newArticle = {
-//         title: "Test new article",
+//       const newTasting = {
+//         title: "Test new Tasting",
 //         style: "Listicle",
-//         content: "Test new article content..."
+//         content: "Test new Tasting content..."
 //       };
 //       it(`responds with 400 and an error message when ${field} field is missing`, () => {
-//         delete newArticle[field];
+//         delete newTasting[field];
 //         return supertest(app)
-//           .post('/articles')
-//           .send(newArticle)
+//           .post('/tastings')
+//           .send(newTasting)
 //           .expect(400, {
 //             error: {message: `Missing ${field} in request body`}
 //           });
 //       });
 //     });
 
-//     context(`When an XSS attack article is put in, article is sanitized right away`, () => {
-//       const maliciousArticle = makeMaliciousArticle();
-      
+//     context(`When an XSS attack Tasting is put in, Tasting is sanitized right away`, () => {
+//       const maliciousTasting = makeMaliciousTasting();
+
 //       it('removes XSS attack content', () => {
 //         return supertest(app)
-//           .post(`/articles`)
-//           .send(maliciousArticle)
+//           .post(`/tastings`)
+//           .send(maliciousTasting)
 //           .expect(201)
 //           .expect(res => {
 //             expect(res.body.title).to.eql('Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;');
@@ -124,44 +124,44 @@
 //     });
 //   });
 
-//   describe("GET /articles/:id", () => {
-//     context(`Given no articles`, () => {
+//   describe("GET /tastings/:id", () => {
+//     context(`Given no tastings`, () => {
 //       it(`responds with 404`, () => {
-//         const articleId = 123456;
+//         const TastingId = 123456;
 //         return supertest(app)
-//           .get(`/articles/${articleId}`)
-//           .expect(404, { error: { message: `Article doesn't exist` } });
+//           .get(`/tastings/${TastingId}`)
+//           .expect(404, { error: { message: `Tasting doesn't exist` } });
 //       });
 //     });
 
-//     context("Given there are articles in the database", () => {
-//       const testArticles = makeArticlesArray();
+//     context("Given there are tastings in the database", () => {
+//       const testtastings = maketastingsArray();
 
-//       beforeEach("insert articles", () => {
-//         return db.into("blogful_articles").insert(testArticles);
+//       beforeEach("insert tastings", () => {
+//         return db.into("blogful_tastings").insert(testtastings);
 //       });
 
-//       it("GET /articles/:id responds with 200 and the specified article", () => {
-//         const articleId = 3;
-//         const expected = testArticles[articleId - 1];
+//       it("GET /tastings/:id responds with 200 and the specified Tasting", () => {
+//         const TastingId = 3;
+//         const expected = testtastings[TastingId - 1];
 //         return supertest(app)
-//           .get(`/articles/${articleId}`)
+//           .get(`/tastings/${TastingId}`)
 //           .expect(200, expected);
 //       });
 //     });
 
-//     context(`Given an XSS attack article`, () => {
-//       const maliciousArticle = makeMaliciousArticle();
-      
-//       beforeEach('insert malicious article', () => {
+//     context(`Given an XSS attack Tasting`, () => {
+//       const maliciousTasting = makeMaliciousTasting();
+
+//       beforeEach('insert malicious Tasting', () => {
 //         return db
-//           .into('blogful_articles')
-//           .insert([ maliciousArticle ]);
+//           .into('blogful_tastings')
+//           .insert([ maliciousTasting ]);
 //       });
-      
+
 //       it('removes XSS attack content', () => {
 //         return supertest(app)
-//           .get(`/articles/${maliciousArticle.id}`)
+//           .get(`/tastings/${maliciousTasting.id}`)
 //           .expect(200)
 //           .expect(res => {
 //             expect(res.body.title).to.eql('Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;');
@@ -171,35 +171,35 @@
 //     });
 //   });
 
-//   describe.only(`DELETE /articles/:article_id`, () => {
-//     context(`Given no articles`, () => {
+//   describe.only(`DELETE /tastings/:Tasting_id`, () => {
+//     context(`Given no tastings`, () => {
 //       it(`responds with 404`, () => {
-//         const articleId = 123456;
+//         const TastingId = 123456;
 //         return supertest(app)
-//           .delete(`/articles/${articleId}`)
-//           .expect(404, { error: { message: `Article doesn't exist` } });
+//           .delete(`/tastings/${TastingId}`)
+//           .expect(404, { error: { message: `Tasting doesn't exist` } });
 //       });
 //     });
 
-//     context('Given there are articles in the database', () => {
-//       const testArticles = makeArticlesArray();
-    
-//       beforeEach('insert articles', () => {
+//     context('Given there are tastings in the database', () => {
+//       const testtastings = maketastingsArray();
+
+//       beforeEach('insert tastings', () => {
 //         return db
-//           .into('blogful_articles')
-//           .insert(testArticles);
+//           .into('blogful_tastings')
+//           .insert(testtastings);
 //       });
-    
-//       it('responds with 204 and removes the article', () => {
+
+//       it('responds with 204 and removes the Tasting', () => {
 //         const idToRemove = 2;
-//         const expectedArticles = testArticles.filter(article => article.id !== idToRemove);
+//         const expectedtastings = testtastings.filter(Tasting => Tasting.id !== idToRemove);
 //         return supertest(app)
-//           .delete(`/articles/${idToRemove}`)
+//           .delete(`/tastings/${idToRemove}`)
 //           .expect(204)
 //           .then(res =>
 //             supertest(app)
-//               .get(`/articles`)
-//               .expect(expectedArticles)
+//               .get(`/tastings`)
+//               .expect(expectedtastings)
 //           );
 //       });
 //     });

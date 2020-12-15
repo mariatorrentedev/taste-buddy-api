@@ -1,13 +1,13 @@
-// const ArticlesService = {
-//   getAllArticles(db) {
+// const TastingsService = {
+//   getAllTastings(db) {
 //     return db
 //       .select('*')
-//       .from('blogful_articles');
+//       .from('tastings');
 //   },
-//   insertArticle(db, newArticle) {
+//   insertTasting(db, newTasting) {
 //     return db
-//       .insert(newArticle)
-//       .into('blogful_articles')
+//       .insert(newTasting)
+//       .into('tastings')
 //       .returning('*')
 //       .then(rows => {
 //         return rows[0];
@@ -16,22 +16,22 @@
 //   getById(db, id) {
 //     return db
 //       .select('*')
-//       .from('blogful_articles')
+//       .from('tastings')
 //       .where({ id: id })
 //       .first();
 //   },
-//   deleteArticle(db, id) {
+//   deleteTasting(db, id) {
 //     return db
-//       .from('blogful_articles')
+//       .from('tastings')
 //       .where({ id })
 //       .delete();
 //   },
-//   updateArticle(db, id, newData) {
+//   updateTasting(db, id, newData) {
 //     return db
-//       .from('blogful_articles')
+//       .from('tastings')
 //       .where({ id })
 //       .update(newData);
 //   }
 // };
 
-// module.exports = ArticlesService;
+// module.exports = TastingsService;
