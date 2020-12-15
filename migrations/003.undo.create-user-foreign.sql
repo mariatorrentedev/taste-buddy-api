@@ -1,0 +1,1 @@
+ALTER TABLE tastings DROP COLUMN IF EXISTS userId;

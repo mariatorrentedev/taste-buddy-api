@@ -1,6 +1,6 @@
-// const express = require("express");
-// const TastingsService = require("./tastings-service");
-// const xss = require('xss');
+const express = require("express");
+const TastingsService = require("./tastings-service");
+const xss = require("xss");
 
 // const tastingsRouter = express.Router();
 
@@ -13,10 +13,10 @@
 //           tastings = tastings.map(tastings => {
 //             return {
 //               id: tastings.id,
-//               style: tastings.style,
-//               title: xss(tastings.title), // sanitize title
-//               content: xss(tastings.content), // sanitize content
-//               date_published: tastings.date_published,
+//               wineName: tastings.wineName,
+//               producer: xss(tastings.producer), // sanitize producer
+//               varietal: xss(tastings.varietal), // sanitize varietal
+//               region: tastings.region,
 //             };
 //           });
 //         }
@@ -26,7 +26,33 @@
 //       .catch(next);
 //   })
 //   .post((req, res, next) => {
-//     const { title, content, style } = req.body;
+//     const { wineName,producer,varietal,vintage,region,condition,concentration,colorRed, colorWhite, colorRose, rim,extract,tearing,
+//      gas,
+//      conditionNose,
+//      intensity,
+//      ageAssessment,
+//      fruitRed,
+//      fruitWhite,
+//      fruitRose,
+//      sweetness,
+//      fruitFRed,
+//      fruitFWhite,
+//      fruitFRose,
+//      nonFruit,
+//      earth,
+//      mineral,
+//      tannins,
+//      acidity,
+//      alcohol,
+//      complexity,
+//      length,
+//      body,
+//      texture,
+//      woodAge,
+//      woodSize,
+//      woodOrigin,
+//      comments,
+//      score } = req.body;
 //     let newtasting = {
 //       title, content, style
 //     };

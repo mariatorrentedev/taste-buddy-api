@@ -4,7 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
-// const someRouter = require('./some-routers/some-router');
+const usersRouter = require("./users/users-router");
+const authRouter = require("./auth/auth-router");
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
@@ -14,11 +15,8 @@ app.use(helmet());
 app.use(cors({ origin: CLIENT_ORIGIN }));
 app.use(express.json());
 
-// app.use("/api/", someRouter);
-
-app.get(`/api/users`, (req, res, next) => {
-  res.json(users).next();
-});
+app.use(usersRouter);
+app.use("/api/auth", authRouter);
 
 // API KEY VALIDATION //
 app.use(function validateBearerToken(req, res, next) {
