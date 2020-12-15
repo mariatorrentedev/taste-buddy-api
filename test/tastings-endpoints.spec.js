@@ -15,11 +15,11 @@
 //     app.set("db", db);
 //   });
 
-//   before("clean the table", () => db("blogful_tastings").truncate());
+//   before("clean the table", () => db("tastings").truncate());
 
 //   after("disconnect from db", () => db.destroy());
 
-//   afterEach("cleanup", () => db("blogful_tastings").truncate());
+//   afterEach("cleanup", () => db("tastings").truncate());
 
 //   describe("GET /tastings", () => {
 //     context(`Given no tastings`, () => {
@@ -32,7 +32,7 @@
 //       const testtastings = maketastingsArray();
 
 //       beforeEach("insert tastings", () => {
-//         return db.into("blogful_tastings").insert(testtastings);
+//         return db.into("tastings").insert(testtastings);
 //       });
 
 //       it("GET /tastings responds with 200 and all tastings", () => {
@@ -45,7 +45,7 @@
 
 //       beforeEach('insert malicious Tasting', () => {
 //         return db
-//           .into('blogful_tastings')
+//           .into('tastings')
 //           .insert([ maliciousTasting ]);
 //       });
 
@@ -138,7 +138,7 @@
 //       const testtastings = maketastingsArray();
 
 //       beforeEach("insert tastings", () => {
-//         return db.into("blogful_tastings").insert(testtastings);
+//         return db.into("tastings").insert(testtastings);
 //       });
 
 //       it("GET /tastings/:id responds with 200 and the specified Tasting", () => {
@@ -155,7 +155,7 @@
 
 //       beforeEach('insert malicious Tasting', () => {
 //         return db
-//           .into('blogful_tastings')
+//           .into('tastings')
 //           .insert([ maliciousTasting ]);
 //       });
 
@@ -186,7 +186,7 @@
 
 //       beforeEach('insert tastings', () => {
 //         return db
-//           .into('blogful_tastings')
+//           .into('tastings')
 //           .insert(testtastings);
 //       });
 

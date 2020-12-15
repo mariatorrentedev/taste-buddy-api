@@ -12,3 +12,5 @@ CREATE TABLE tastings (
   tastings
   ADD COLUMN userId INTEGER NOT NULL REFERENCES users(id)
   ON DELETE CASCADE;
+
+  
