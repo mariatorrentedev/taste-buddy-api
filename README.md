@@ -1,6 +1,6 @@
 # TASTEBUDDY API
 
-### Built using Express, Knex, and NodeJS
+### Build using Express, Knex, and NodeJS
 
 ### Deploying
 
