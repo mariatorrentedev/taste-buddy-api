@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
+const tastingsRouter = require("./tastings/tastings-router");
 const usersRouter = require("./users/users-router");
 const authRouter = require("./auth/auth-router");
 
@@ -15,22 +16,13 @@ app.use(helmet());
 app.use(cors({ origin: CLIENT_ORIGIN }));
 app.use(express.json());
 
+// Users
 app.use(usersRouter);
 app.use("/api/auth", authRouter);
+// Tastings
+app.use("/api/tastings", tastingsRouter);
 
-// API KEY VALIDATION //
-app.use(function validateBearerToken(req, res, next) {
-  const apiToken = process.env.API_TOKEN;
-  const authToken = req.get("Authorization");
-
-  if (!authToken || authToken.split(" ")[1] !== apiToken) {
-    logger.error(`Unauthorized request to path: ${req.path}`);
-    return res.status(401).json({ error: "Unauthorized request" });
-  }
-  // move to next middleware
-  next();
-});
-
+// Error Handling
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {

@@ -8,6 +8,7 @@ const AuthService = {
     return knex("users").where({ email }).first();
   },
   comparePasswords(password, hash) {
+    // compare: is a buildIn bycrypt method
     return bcrypt.compare(password, hash);
   },
   createJwt(subject, payload) {

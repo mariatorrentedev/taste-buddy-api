@@ -39,7 +39,7 @@ CREATE TABLE tastings (
     woodSize TEXT NOT NULL,
     woodOrigin TEXT NOT NULL,
     comments TEXT,
-    score INTEGER
+    score INTEGER,
 );
 
  

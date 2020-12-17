@@ -1,88 +1,32 @@
 const express = require("express");
 const TastingsService = require("./tastings-service");
 const xss = require("xss");
+const { requireAuth } = require("../middleware/jwt-auth");
 
-// const tastingsRouter = express.Router();
+const tastingsRouter = express.Router();
 
-// tastingsRouter
-//   .route("/")
-//   .get((req, res, next) => {
-//     TastingsService.getAllTastings(req.app.get('db'))
-//       .then((tastings) => {
-//         if (tastings.length !== 0) {
-//           tastings = tastings.map(tastings => {
-//             return {
-//               id: tastings.id,
-//               wineName: tastings.wineName,
-//               producer: xss(tastings.producer), // sanitize producer
-//               varietal: xss(tastings.varietal), // sanitize varietal
-//               region: tastings.region,
-//             };
-//           });
-//         }
-//         return tastings;
-//       })
-//       .then(tastings => res.json(tastings))
-//       .catch(next);
-//   })
-//   .post((req, res, next) => {
-//     const { wineName,producer,varietal,vintage,region,condition,concentration,colorRed, colorWhite, colorRose, rim,extract,tearing,
-//      gas,
-//      conditionNose,
-//      intensity,
-//      ageAssessment,
-//      fruitRed,
-//      fruitWhite,
-//      fruitRose,
-//      sweetness,
-//      fruitFRed,
-//      fruitFWhite,
-//      fruitFRose,
-//      nonFruit,
-//      earth,
-//      mineral,
-//      tannins,
-//      acidity,
-//      alcohol,
-//      complexity,
-//      length,
-//      body,
-//      texture,
-//      woodAge,
-//      woodSize,
-//      woodOrigin,
-//      comments,
-//      score } = req.body;
-//     let newtasting = {
-//       title, content, style
-//     };
+tastingsRouter
+  .route("/")
+  .get(requireAuth, (req, res, next) => {
+    console.log("called", req.user.id);
+    TastingsService.getAllTastings(req.app.get("db"), req.user.id)
+      .then((tastings) => res.json(tastings))
+      .catch(next);
+  })
+  .post(requireAuth, (req, res, next) => {
+    if (!req.body.winename) {
+      res.status(400).json({ error: "Wine Name required" });
+    }
 
-//     for (const [key, value] of Object.entries(newtastings)) {
-//       if(value == null) {
-//         return res.status(400).json({
-//           error: { message: `Missing ${key} in request body` }
-//         });
-//       }
-//     }
+    const newtasting = req.body;
+    newtasting.userid = req.user.id;
 
-//     newTasting = {
-//       title: xss(title),
-//       content: xss(content),
-//       style
-//     };
-
-//     TastingsService.inserttastings(
-//       req.app.get('db'),
-//       newtastings
-//     )
-//       .then(tastings => {
-//         res
-//           .status(201)
-//           .location(`/tastings/${tastings.id}`)
-//           .json(tastings);
-//       })
-//       .catch(next);
-//   });
+    TastingsService.insertTasting(req.app.get("db"), newtasting)
+      .then((tasting) => {
+        res.status(201).location(`/tastings/${tasting.id}`).json(tasting);
+      })
+      .catch(next);
+  });
 
 // tastingsRouter
 //   .route('/:id')
@@ -110,7 +54,10 @@ const xss = require("xss");
 //       content: xss(res.tastings.content), // sanitize content
 //       date_published: res.tastings.date_published,
 //     });
-//   })
+//   }).put((req, res, next)=>{
+//      const ={} req.body
+
+//     })
 //   .delete((req, res, next) => {
 //     TastingsService.deletetastings(
 //       req.app.get('db'),
@@ -122,4 +69,4 @@ const xss = require("xss");
 //       .catch(next);
 //   });
 
-// module.exports = tastingsRouter;
+module.exports = tastingsRouter;

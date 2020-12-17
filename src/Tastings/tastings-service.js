@@ -1,6 +1,7 @@
 const TastingsService = {
-  getAllTastings(db) {
-    return db.select("*").from("tastings");
+  // All tastings CRUD are going to depend on the userId(as foreign key of tastings table)
+  getAllTastings(db, userid) {
+    return db.select("*").from("tastings").where({ userid });
   },
   insertTasting(db, newTasting) {
     return db
@@ -11,14 +12,14 @@ const TastingsService = {
         return rows[0];
       });
   },
-  getById(db, id) {
-    return db.select("*").from("tastings").where({ id: id }).first();
+  getById(db, id, userid) {
+    return db.select("*").from("tastings").where({ id: id, userid }).first();
   },
-  deleteTasting(db, id) {
-    return db.from("tastings").where({ id }).delete();
+  deleteTasting(db, id, userid) {
+    return db.from("tastings").where({ id, userid }).delete();
   },
-  updateTasting(db, id, newData) {
-    return db.from("tastings").where({ id }).update(newData);
+  updateTasting(db, id, newData, userid) {
+    return db.from("tastings").where({ id, userid }).update(newData);
   },
 };
 

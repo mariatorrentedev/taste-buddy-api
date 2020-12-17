@@ -61,7 +61,7 @@ VALUES
     'Old',
     'American',
     'Large',
-  95-100, null)
+  95-100, 1)
   ,
   ('Yacochuya',
     'The Etcharts',
@@ -101,4 +101,4 @@ VALUES
     'Old',
    'American',
     'Large',
-    85-89, null)
+    85-89, 2)
