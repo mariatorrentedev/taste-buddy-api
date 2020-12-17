@@ -28,45 +28,32 @@ tastingsRouter
       .catch(next);
   });
 
-// tastingsRouter
-//   .route('/:id')
-//   .all((req, res, next) => {
-//     TastingsService.getById(
-//       req.app.get('db'),
-//       req.params.id
-//     )
-//       .then(tastings => {
-//         if (!tasting) {
-//           return res.status(404).json({
-//             error: { message: `tasting doesn't exist` }
-//           });
-//         };
-//         res.tastings = tastings;
-//         next();
-//       })
-//       .catch(next);
-//   })
-//   .get((req, res, next) => {
-//     res.json({
-//       id: res.tastings.id,
-//       style: res.tastings.style,
-//       title: xss(res.tastings.title), // sanitize title
-//       content: xss(res.tastings.content), // sanitize content
-//       date_published: res.tastings.date_published,
-//     });
-//   }).put((req, res, next)=>{
-//      const ={} req.body
-
-//     })
-//   .delete((req, res, next) => {
-//     TastingsService.deletetastings(
-//       req.app.get('db'),
-//       req.params.id
-//     )
-//       .then(() => {
-//         res.status(204).end();
-//       })
-//       .catch(next);
-//   });
+tastingsRouter
+  .route("/:id")
+  .all(requireAuth, (req, res, next) => {
+    cid = parseInt(req.params.id);
+    TastingsService.getById(req.app.get("db"), cid, req.user.id)
+      .then((tastings) => {
+        if (!tastings) {
+          return res.status(404).json({
+            error: { message: `tasting doesn't exist` },
+          });
+        }
+        res.tastings = tastings;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(req.tastings);
+  })
+  .put((req, res, next) => {})
+  .delete((req, res, next) => {
+    TastingsService.deleteTasting(req.app.get("db"), cid, req.user.id)
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  });
 
 module.exports = tastingsRouter;
