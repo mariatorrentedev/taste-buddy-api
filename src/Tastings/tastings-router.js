@@ -4,6 +4,7 @@ const xss = require("xss");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 const tastingsRouter = express.Router();
+const bodyParser = express.json();
 
 tastingsRouter
   .route("/")
@@ -47,11 +48,23 @@ tastingsRouter
   .get((req, res, next) => {
     res.json(req.tastings);
   })
-  .put((req, res, next) => {})
-  .delete((req, res, next) => {
+  .delete(requireAuth, (req, res, next) => {
     TastingsService.deleteTasting(req.app.get("db"), cid, req.user.id)
       .then(() => {
         res.status(204).end();
+      })
+      .catch(next);
+  })
+  .put(requireAuth, bodyParser, (req, res, next) => {
+    const updateTasting = req.body;
+    TastingsService.updateTasting(
+      req.app.get("db"),
+      cid,
+      updateTasting,
+      req.user.id
+    )
+      .then(() => {
+        res.status(200).json((res.updateTasting = updateTasting));
       })
       .catch(next);
   });
