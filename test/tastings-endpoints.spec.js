@@ -1,23 +1,41 @@
-// const { expect } = require("chai");
-// const knex = require("knex");
-// const supertest = require("supertest");
-// const app = require("../src/app");
-// const { maketastingsArray, makeMaliciousTasting } = require("./tastings.fixtures");
+const { expect } = require("chai");
+const knex = require("knex");
+const supertest = require("supertest");
+const app = require("../src/app");
+const authToken = require("../src/auth/auth-router");
+const { makeTastingsArr } = require("./tastings.fixtures");
 
-// describe("Tasting endpoints", () => {
-//   let db;
+describe("Tasting endpoints", () => {
+  let db;
+  let authToken;
 
-//   before("make knex instance", () => {
-//     db = knex({
-//       client: "pg",
-//       connection: process.env.TEST_DB_URL
-//     });
-//     app.set("db", db);
-//   });
+  before("make knex instance", () => {
+    db = knex({
+      client: "pg",
+      connection: process.env.TEST_DB_URL,
+    });
+    app.set("db", db);
+  });
+});
+beforeEach("clean the table", () =>
+  db.raw("TRUNCATE TABLE users, tastings RESTART IDENTITY CASCADE")
+);
+beforeEach("register and login", () => {
+  let user = { email: "testuser@test.com", password: "P@ssword1234" };
+  return supertest(app)
+    .post("/api/users")
+    .send(user)
+    .then((res) => {
+      return supertest(app)
+        .post("/api/auth/login")
+        .send(user)
+        .then((res2) => {
+          authToken = res2.body.authToken;
+        });
+    });
+});
 
-//   before("clean the table", () => db("tastings").truncate());
-
-//   after("disconnect from db", () => db.destroy());
+after("disconnect from db", () => db.destroy());
 
 //   afterEach("cleanup", () => db("tastings").truncate());
 
@@ -204,4 +222,4 @@
 //       });
 //     });
 //   });
-// });
+// })
