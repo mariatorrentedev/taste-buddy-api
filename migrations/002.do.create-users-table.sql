@@ -3,4 +3,4 @@ CREATE TABLE users (
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL UNIQUE,
   dateCreated TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
+)

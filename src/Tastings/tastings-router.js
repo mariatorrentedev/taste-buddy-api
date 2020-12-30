@@ -1,6 +1,5 @@
 const express = require("express");
 const TastingsService = require("./tastings-service");
-const xss = require("xss");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 const tastingsRouter = express.Router();
@@ -18,7 +17,6 @@ tastingsRouter
     if (!req.body.winename) {
       res.status(400).json({ error: "Wine Name required" });
     }
-
     const newtasting = req.body;
     newtasting.userid = req.user.id;
 
