@@ -41,6 +41,7 @@ describe("Tasting endpoints", () => {
 
   afterEach("cleanup", () => db("tastings").truncate());
 
+  /* GET */
   describe("GET /api/tastings", () => {
     context(`Given there are tastings in the db`, () => {
       const testTastings = makeTastingsArr();
@@ -63,7 +64,7 @@ describe("Tasting endpoints", () => {
       });
     });
   });
-
+  /* POST */
   describe("POST/api/tastings", () => {
     const testUsers = makeUsersArr();
     beforeEach("insert users", () => {
@@ -84,36 +85,6 @@ describe("Tasting endpoints", () => {
               expect(newRes.body.winename).to.equal(newTasting[0].winename);
             });
         });
-    });
-  });
-
-  describe("GET /api/tastings/:id", () => {
-    context(`Given no tastings`, () => {
-      it(`responds with 404`, () => {
-        const tastingId = 12314;
-        return supertest(app).get(`/tastings/${tastingId}`).expect(404);
-      });
-    });
-
-    context("Given there are tastings in the database", () => {
-      const testUsers = makeUsersArr();
-      const testTastings = makeTastingsArr();
-
-      beforeEach("insert users", () => {
-        return db.into("users").insert(testUsers);
-      });
-      beforeEach("insert tastings", () => {
-        return db.into("tastings").insert(testTastings);
-      });
-
-      it("responds with 200 and the specified Tasting", () => {
-        const tastingId = 2;
-        const expectedTasting = testTastings[tastingId - 1];
-        return supertest(app)
-          .get(`/api/tastings/${tastingId}`)
-          .set("Authorization", `Bearer ${authToken}`)
-          .expect(200, expectedTasting);
-      });
     });
   });
 
@@ -155,6 +126,44 @@ describe("Tasting endpoints", () => {
               .set("Authorization", `Bearer ${authToken}`)
               .expect(expectedTastings);
           });
+      });
+    });
+  });
+
+  /* PUT */
+  describe(`PUT /api/tastings/:id`, () => {
+    context(`Given there is a tasting at id in the database`, () => {
+      const testTastings = makeTastingsArr();
+      const testUsers = makeUsersArr();
+
+      beforeEach("insert users", () => {
+        return db.into("users").insert(testUsers);
+      });
+
+      beforeEach("insert tastings", () => {
+        return db.into("tastings").insert(testTastings);
+      });
+
+      it(`responds with 200 and updates the tasting`, () => {
+        const idToUpdate = 2;
+        const updateTasting = {
+          winename: "Yacochuya",
+        };
+        const expectedTasting = {
+          ...testTastings[idToUpdate - 1],
+          ...updateTasting,
+        };
+        return supertest(app)
+          .put(`/api/tastings/${idToUpdate}`)
+          .set("Authorization", `Bearer ${authToken}`)
+          .send(updateTasting)
+          .expect(200)
+          .then((res) =>
+            supertest(app)
+              .get(`/api/tastings/${idToUpdate}`)
+              .set("Authorization", `Bearer ${authToken}`)
+              .send(expectedTasting)
+          );
       });
     });
   });

@@ -43,9 +43,7 @@ tastingsRouter
       })
       .catch(next);
   })
-  .get((req, res, next) => {
-    res.json(req.tastings);
-  })
+
   .delete(requireAuth, (req, res, next) => {
     TastingsService.deleteTasting(req.app.get("db"), cid, req.user.id)
       .then(() => {
