@@ -3,7 +3,6 @@ const { expect } = require("chai");
 const knex = require("knex");
 const supertest = require("supertest");
 const app = require("../src/app");
-const authToken = require("../src/auth/auth-router");
 const { makeTastingsArr } = require("./tastings.fixtures");
 const { makeUsersArr } = require("./users.fixtures");
 
