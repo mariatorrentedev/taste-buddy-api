@@ -29,6 +29,7 @@
     "knex": "^0.21.12",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
+    "postgrator": "^4.1.1",
     "xss": "^1.0.8"
   },
   "devDependencies": {
