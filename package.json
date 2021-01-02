@@ -10,8 +10,9 @@
     "migrate:test": "env NODE_ENV=test npm run migrate",
     "migrate:production": "heroku run npm run migrate",
     "start": "node src/server.js",
-    "predeploy": "npm audit && npm run migrate:production",
-    "deploy": "git push origin main && git push heroku main"
+    "predeploy": "npm audit",
+    "deploy": "git push origin main && git push heroku main",
+    "postdeploy": "npm run migrate:production"
   },
   "keywords": [],
   "engines": {
