@@ -16,7 +16,6 @@ const TastingsService = {
     return db.select("*").from("tastings").where({ id: id, userid }).first();
   },
   deleteTasting(db, id, userid) {
-    console.log(id);
     return db.from("tastings").where({ id, userid }).delete();
   },
   updateTasting(db, id, updateTasting, userid) {

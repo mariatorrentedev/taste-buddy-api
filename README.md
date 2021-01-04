@@ -9,7 +9,7 @@
 ### API ENDPOINTS
 
 ```
-/api/auth
+/api/auth/login
 -- POST - login user
 
 /api/users
@@ -22,7 +22,6 @@
 
 /api/tastings/:id
 -- DELETE - Delete the specific tasting depending on the userId relation.
-
 -- PUT  - Edit the specific tasting by tastingId in user session.
 ```
 
