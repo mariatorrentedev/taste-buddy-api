@@ -51,7 +51,7 @@
 - ### Data Persistence:
   - PostgreSQL.
 - ### Hosting:
-  - Vercel.
+  - Heroku.
 
 ### 📑API Documentation
 
