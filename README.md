@@ -1,28 +1,66 @@
 # TASTEBUDDY API
 
-## Created for [TasteBuddy Client](https://taste-buddy-client.vercel.app/)
-
-### Full Stack Application using Express, Knex, NodeJS and REACT.
+## Full Stack PERN Application to create, save, edit and delete wine tasting sheets.
 
 ---
 
-### API ENDPOINTS
+- A Lading Page View will introduce you about the app functionality.
 
-```
-/api/auth/login
--- POST - login user
+![Landing Page](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/tb-home.png?raw=true)
 
-/api/users
--- GET - get the user
--- POST - register a user
+- When you signed as a new user, you'll be redirect to the home page, where you can find a complete TasteBuddy Guide that will have a detailed description of the basic tasting concepts.
 
-/api/tastings
--- GET - get all tastings using auth middleware to depend on the user session for the data.
--- POST - create a tasting by userId in tastings table.
+  ![TasteBuddy Guide](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/gif-tastebuddy.gif?raw=true)
 
-/api/tastings/:id
--- DELETE - Delete the specific tasting depending on the userId relation.
--- PUT  - Edit the specific tasting by tastingId in user session.
-```
+- After reading the guide, you'll be redirect to complete your first TasteBuddy deductive format.
 
-This is the server-side of TasteBuddy App which uses Node/Express to build the API, and PostgreSQL/Knex for the database setup.
+  ![Deductive Tasting Format](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/gif-deductive-format.gif?raw=true)
+
+- You'll have a Tastings section, where all your wine tasting sheets will be save, PLUS filter by Varietal, Vintage, Score and Search by Wine name.
+  ![Tastings Section](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/tastings-tb.png?raw=true)
+
+- You'll be able to Edit your Tastings
+  ![Edit Tasting](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/edit-tb.png?raw=true)
+
+- At your Dashboard you'll have the count of your Tasting Sheets, Common Varietals and Average Score
+
+![Dashboard](https://github.com/cartodeveloper/taste-buddy-client/blob/main/public/Images/dashboard-tbuddy.png?raw=true)
+
+---
+
+## 🔗[Live Link](https://taste-buddy-client.vercel.app/)
+
+## 🔗[Client Repo](https://github.com/cartodeveloper/taste-buddy-client)
+
+---
+
+## 💻 Tech Stack
+
+- ### Front-End :
+  - React
+  - React Router
+  - CSS
+  - Jsx
+- ### Back-end:
+  - Node.
+  - Express.
+  - JWT.
+  - Mocha&Chai.
+  - Nodemon.
+  - Supertest.
+- ### Data Persistence:
+  - PostgreSQL.
+- ### Hosting:
+  - Vercel.
+
+### 📑API Documentation
+
+| Method |       Path        |                           Purpose |
+| :----- | :---------------: | --------------------------------: |
+| GET    |    /api/users     |                      Get the user |
+| POST   |    /api/users     |                 Register the user |
+| POST   |  /api/auth/login  |     Validates username & password |
+| GET    |   /api/tastings   |   Get all tastings from the user. |
+| POST   |   /api/tastings   | Create a tasting in user session. |
+| PUT    | /api/tastings/:id |                     Edit tasting. |
+| DELETE | /api/tastings/:id |                   Delete tasting. |
