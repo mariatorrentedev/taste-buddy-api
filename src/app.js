@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
-const tastingsRouter = require("./Tastings/tastings-router");
-const usersRouter = require("./Users/users-router");
+const tastingsRouter = require("./tastings/tastings-router");
+const usersRouter = require("./users/users-router");
 const authRouter = require("./auth/auth-router");
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
